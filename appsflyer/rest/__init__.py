@@ -65,6 +65,7 @@ class Client(object):
         custom_dimension=None,
         app_type=None,
         custom_data=None,
+        **kwargs,
     ):
         event_data = {
             "appsflyer_id": appsflyer_id,
@@ -85,5 +86,6 @@ class Client(object):
         }
 
         event_data = {key: value for key, value in event_data.items() if value}
+        event_data.update(kwargs)
 
         return self.request(data=event_data)
