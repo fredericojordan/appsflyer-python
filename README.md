@@ -29,6 +29,9 @@ dev_key = "YYYYYYYYYYYYYYYY"
 appsflyer_client = Client(app_id=app_id, dev_key=dev_key)
 ```
 
+- `app_id`: The app identifier used in the AppsFlyer dashboard. Insert it precisely as it appears on the dashboard.
+- `dev_key`: The authentication token in the header. To get the dev key, in the AppsFlyer dashboard go to: **App Settings > Dev Key**
+
 ### Generating an Event
 
 To generate an event, simply call `Client.generate_event()` with keyword arguments:
@@ -56,7 +59,31 @@ appsflyer_client.generate_event(
         "af_quantity": "1",
     },
 )
-
 ```
 
 The parameters `event_name`, `event_value` and `appsflyer_id` are mandatory.
+
+### Device Identifiers
+
+Additional data parameters (such as an [IDFA] or [GAID] identifiers) may be sent as keyword arguments:
+
+```python
+appsflyer_client.generate_event(
+    appsflyer_id="9999999999999-9999999999999999999",
+    event_name="af_purchase",
+    event_value={"af_revenue": "420"},
+    idfa="9876F1SS-2983-3855-27RR-2R626772VFNB",
+)
+```
+
+[AppsFlyer API](https://support.appsflyer.com/hc/en-us/articles/207034486-Server-to-server-events-API-for-mobile-S2S-mobile-#payload-parameters) expects one or more of the following device identifiers:
+
+- `idfa`
+- `idfv`
+- `advertising_id` (GAID)
+- `oaid`
+- `amazon_aid`
+- `imei`
+
+[IDFA]: https://developer.apple.com/documentation/appstoreconnectapi/advertising_identifier_idfa_declarations
+[GAID]: https://support.google.com/googleplay/android-developer/answer/6048248
