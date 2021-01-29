@@ -1,0 +1,79 @@
+version: 2
+
+jobs:
+  python_linter:
+    docker:
+      - image: circleci/python:3.8-buster
+    steps:
+      - checkout
+      - run:
+          name: Run Python linter
+          command: |
+            sudo pip install black
+            black --check .
+
+  python_bandit:
+    docker:
+      - image: circleci/python:3.8-buster
+    steps:
+      - checkout
+      - run:
+          name: Check for Python security issues
+          command: |
+            sudo pip install bandit
+            bandit -r .
+
+  tests:
+    docker:
+      - image: circleci/python:3.8-buster
+    steps:
+      - checkout
+      - run:
+          name: Install test dependencies
+          command: pip install . -r tests/requirements.txt
+      - run:
+          name: Run tests with coverage
+          command: |
+            coverage run -m pytest -vv . && coverage xml
+      - run:
+          name: Report coverage
+          command: coverage report
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./coverage.xml
+
+  analysis_codeclimate:
+    docker:
+      - image: circleci/python:3.8-buster
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Download test reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            cp /tmp/workspace/coverage.xml ./coverage.xml
+            ./cc-test-reporter format-coverage -t coverage.py -o codeclimate.json
+            ./cc-test-reporter upload-coverage -i codeclimate.json
+      - store_artifacts:
+          path: codeclimate.json
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - python_linter
+      - python_bandit
+      - tests:
+          requires:
+            - python_linter
+            - python_bandit
+      - analysis_codeclimate:
+          requires:
+            - tests
