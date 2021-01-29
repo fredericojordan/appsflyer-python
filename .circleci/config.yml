@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Run tests with coverage
           command: |
-            coverage run -m pytest -vv . && coverage xml
+            coverage run --source=appsflyer/ -m pytest -vv . && coverage xml
       - run:
           name: Report coverage
           command: coverage report
