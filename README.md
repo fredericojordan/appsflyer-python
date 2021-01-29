@@ -1,6 +1,8 @@
 # appsflyer-python
 
 [![PyPI](https://img.shields.io/pypi/v/appsflyer.svg)](https://pypi.python.org/pypi/appsflyer)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6bc700e876085158380d/maintainability)](https://codeclimate.com/github/fredericojordan/appsflyer-python/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6bc700e876085158380d/test_coverage)](https://codeclimate.com/github/fredericojordan/appsflyer-python/test_coverage)
 
 ## Documentation
 
@@ -12,6 +14,14 @@ Install using [`pip`](https://pypi.org/project/pip/):
 
 ```shell
 pip install appsflyer
+```
+
+Alternatively, you may download the repository and run the installation directly:
+
+```shell
+git clone https://github.com/fredericojordan/appsflyer-python.git
+cd appsflyer-python
+python setup.py install
 ```
 
 ## Getting Started
