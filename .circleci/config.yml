@@ -21,7 +21,7 @@ jobs:
           name: Check for Python security issues
           command: |
             sudo pip install bandit
-            bandit -r .
+            bandit -r . -x ./tests/
 
   tests:
     docker:
