@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 __version__ = None
 with open("appsflyer/__init__.py") as f:
-    exec(f.read())
+    exec(f.read())  # nosec
 
 with open("README.md") as f:
     long_description = f.read()

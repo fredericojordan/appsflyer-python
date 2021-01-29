@@ -14,6 +14,14 @@ Install using [`pip`](https://pypi.org/project/pip/):
 pip install appsflyer
 ```
 
+Alternatively, you may download the repository and run the installation directly:
+
+```shell
+git clone https://github.com/fredericojordan/appsflyer-python.git
+cd appsflyer-python
+python setup.py install
+```
+
 ## Getting Started
 
 To start generating events, we need only a `Client` instance.
