@@ -1,6 +1,9 @@
 import json
+import logging
 
 import requests
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Client(object):
@@ -85,7 +88,9 @@ class Client(object):
             "custom_data": custom_data,
         }
 
-        event_data = {key: value for key, value in event_data.items() if value}
+        event_data = {
+            key: value for key, value in event_data.items() if value is not None
+        }
         event_data.update(kwargs)
 
         return self.request(data=event_data)
